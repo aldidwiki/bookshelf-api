@@ -33,7 +33,7 @@ const addBookHandler = (request, h) => {
     updatedAt,
   };
 
-  if (name === undefined) {
+  if (!name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. Mohon isi nama buku',
@@ -77,7 +77,7 @@ const addBookHandler = (request, h) => {
 const getAllBooksHandler = (request) => {
   const { finished, reading, name } = request.query;
 
-  if (finished !== undefined) {
+  if (finished) {
     let filteredBooks;
     if (finished == 0) {
       filteredBooks = books.filter((book) => book.finished === false);
@@ -98,7 +98,7 @@ const getAllBooksHandler = (request) => {
     };
   }
 
-  if (reading !== undefined) {
+  if (reading) {
     let filteredBooks;
     if (reading == 0) {
       filteredBooks = books.filter((book) => book.reading === false);
@@ -119,7 +119,7 @@ const getAllBooksHandler = (request) => {
     };
   }
 
-  if (name !== undefined) {
+  if (name) {
     const filteredBooks = books.filter((book) => {
       const nm = name.toLowerCase();
       return book.name.toLowerCase().includes(nm);
@@ -152,7 +152,7 @@ const getBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
   const book = books.filter((b) => b.id === bookId)[0];
-  if (book !== undefined) {
+  if (book) {
     return {
       status: 'success',
       data: {
@@ -187,7 +187,7 @@ const editBookByIdHandler = (request, h) => {
 
   const index = books.findIndex((book) => book.id === bookId);
 
-  if (name === undefined) {
+  if (!name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal memperbarui buku. Mohon isi nama buku',
